@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>To Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      background-image: url("{% static 'your_app/images/download.jpeg' %}"); /* Correct path to the image */
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    form input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    form input[type="submit"] {
+      padding: 10px 15px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    form input[type="submit"]:hover {
+      background-color: #218838;
+    }
+
+    .task-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .task-list .task-title {
+      flex-grow: 1;
+    }
+
+    .task-list a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 10px; /* Add space between the links */
+    }
+
+    .task-list a:last-child {
+      margin-right: 0; /* Remove margin from the last link */
+    }
+
+    .task-list a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To Do List</h1>
+    <nav>
+      {%if user.is_authenticated%}
+      <p>Hello {{user.username}}</p>
+      <a href = "{% url 'logout' %}">logout</a>
+      {%else%}
+      <a href="{% url 'register' %}">Register</a> 
+      <a href="{% url 'login' %}">login</a> 
+      {%endif%}
+    </nav>
+    <form method="POST" action="/">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" name="createtask" value="Create Task">
+    </form>
+    <ul class="task-list">
+      {% for task in tasks %}
+        <li>
+          <span class="task-title">{{ task }}</span>
+          <a href="{% url 'update_task' task.id %}">Update</a>
+          <a href="{% url 'delete_task' task.id %}">Delete</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

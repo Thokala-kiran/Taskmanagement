@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      form input[type="text"],
+      form input[type="password"] {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: calc(100% - 22px);
+        box-sizing: border-box;
+      }
+
+      form input[type="submit"] {
+        padding: 10px 15px;
+        border: none;
+        background-color: #28a745;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        width: calc(100% - 22px);
+        box-sizing: border-box;
+      }
+
+      form input[type="submit"]:hover {
+        background-color: #218838;
+      }
+
+      .messages {
+        margin-top: 20px;
+      }
+
+      .messages h4 {
+        color: #d9534f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Register</h1>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="First Name"><br>
+        <input type="text" name="last_name" placeholder="Last Name"><br>
+        <input type="text" name="username" placeholder="Username"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <input type="password" name="confirm_password" placeholder="Confirm Password"><br>
+        <input type="submit" value="Submit">
+      </form>
+      <div class="messages">
+        {% for mess in messages %}
+        <h4>{{ mess }}</h4>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
